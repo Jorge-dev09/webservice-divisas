@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Conversor de Divisas</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    text-align: center;
+    width: 320px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+button {
+    background: #4facfe;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00c6ff;
+}
+
+#resultado {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <h2>💱 Conversor de Divisas</h2>
+
+    <input type="number" id="cantidad" placeholder="Cantidad">
+
+    <select id="tipo">
+        <option value="euro-a-mxn">Euro → MXN</option>
+        <option value="usd-a-mxn">USD → MXN</option>
+        <option value="cad-a-mxn">CAD → MXN</option>
+        <option value="gbp-a-mxn">Libra → MXN</option>
+        <option value="mxn-a-euro">MXN → Euro</option>
+        <option value="mxn-a-usd">MXN → USD</option>
+        <option value="mxn-a-cad">MXN → CAD</option>
+        <option value="mxn-a-gbp">MXN → Libra</option>
+    </select>
+
+    <button onclick="convertir()">Convertir</button>
+
+    <p id="resultado"></p>
+</div>
+
+<script>
+function convertir() {
+    let cantidad = document.getElementById("cantidad").value;
+    let tipo = document.getElementById("tipo").value;
+
+    fetch(`http://127.0.0.1:5000/${tipo}?cantidad=${cantidad}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("resultado").innerText =
+                "Resultado: " + data.conversion;
+        });
+}
+</script>
+
+</body>
+</html>
+
